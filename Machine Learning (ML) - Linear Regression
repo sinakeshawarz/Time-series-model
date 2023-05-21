@@ -1,0 +1,15 @@
+import numpy as np
+from sklearn.linear_model import LinearRegression
+
+# Past 5 days prices
+days = np.array([1, 2, 3, 4, 5]).reshape(-1, 1)
+prices = np.array([100, 101, 102, 103, 104])
+
+# Create and fit the model
+model = LinearRegression()
+model.fit(days, prices)
+
+# Predict the price on the 6th day
+day_6 = np.array([6]).reshape(-1, 1)
+predicted_price = model.predict(day_6)
+print("Predicted price:", predicted_price[0])
