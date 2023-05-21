@@ -1,0 +1,13 @@
+from statsmodels.tsa.arima.model import ARIMA
+
+# Past 5 days prices
+days = [1, 2, 3, 4, 5]
+prices = [100, 101, 102, 103, 104]
+
+# Fit ARIMA model (Assuming an AR(2) model)
+model = ARIMA(prices, order=(2,0,0))
+model_fit = model.fit()
+
+# Predict price on the 6th day
+predicted_price = model_fit.predict(start=5, end=5)
+print("Predicted price:", predicted_price[0])
