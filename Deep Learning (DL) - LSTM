@@ -1,0 +1,26 @@
+from keras.models import Sequential
+from keras.layers import LSTM, Dense
+import numpy as np
+
+# Past 5 days prices
+prices = np.array([100, 101, 102, 103, 104, 105])
+
+# Reshape data for LSTM [samples, time steps, features]
+X_train = np.array([prices[i:i+5] for i in range(len(prices)-5)])
+y_train = prices[5:]
+
+X_train = np.reshape(X_train, (X_train.shape[0], X_train.shape[1], 1))
+
+# Build LSTM model
+model = Sequential()
+model.add(LSTM(50, activation='relu', input_shape=(5, 1)))
+model.add(Dense(1))
+model.compile(optimizer='adam', loss='mse')
+
+# Fit model
+model.fit(X_train, y_train, epochs=100, verbose=0)
+
+# Predict price on 6th day
+X_test = np.array([101, 102, 103, 104, 105]).reshape((1, 5, 1))
+predicted_price = model.predict(X_test)
+print("Predicted price:", predicted_price[0][0])
